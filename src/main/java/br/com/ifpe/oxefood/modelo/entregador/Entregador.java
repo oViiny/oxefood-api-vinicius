@@ -22,21 +22,54 @@ import lombok.Setter;
 public class Entregador extends EntidadeAuditavel  {
   
    @Column
-   private String codigo;
+   private String nome;
 
    @Column
-   private String titulo;
+   private String cpf;
 
    @Column
-   private String descricao;
+   private String rg;
 
    @Column
-   private Double valorUnitario;
+   private LocalDate dataNascimento;
 
    @Column
-   private Integer tempoEntregaMinimo;
+   private String foneCelular;
 
    @Column
-   private Integer tempoEntregaMaximo;
+   private String foneFixo;
+
+   @Column
+   private Integer qtdEntregasRealizadas;
+
+   @Column
+   private Double valorFrete;
+
+   @Column
+   private String enderecoRua;
+
+   @Column
+   private String enderecoNumero;
+
+   @Column
+   private String enderecoBairro;
+
+   @Column
+   private String enderecoCidade;
+
+   @Column
+   private String enderecoCep;
+
+   @Column
+   private String enderecoUf;
+
+   @Column
+   private String enderecoComplemento;
+
+   @Column
+   private Boolean ativo;
+
+
+
 
 }

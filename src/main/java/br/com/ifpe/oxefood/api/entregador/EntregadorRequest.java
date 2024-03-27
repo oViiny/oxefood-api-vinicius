@@ -51,7 +51,7 @@ public class EntregadorRequest {
 
    public Entregador build() {
 
-       return Cliente.builder()
+       return Entregador.builder()
             .nome(nome)
             .cpf(cpf)
             .rg(rg)

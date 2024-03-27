@@ -4,11 +4,12 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.ifpe.oxefood.modelo.entregador.Produto;
+import br.com.ifpe.oxefood.modelo.produto.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Data
 @Builder
@@ -27,15 +28,19 @@ public class ProdutoRequest {
    private Integer tempoEntregaMinimo;
 
    private Integer tempoEntregaMaximo;
+   private Boolean ativo;
 
-   public Entregador build() {
+   public Produto build() {
 
-       return Cliente.builder()
+       return Produto.builder()
             .codigo(codigo)
             .titulo(titulo)
             .descricao(descricao)
             .valorUnitario(valorUnitario)
             .tempoEntregaMinimo(tempoEntregaMinimo)
             .tempoEntregaMaximo(tempoEntregaMaximo)
+            .build();
+
+            
    }
 }

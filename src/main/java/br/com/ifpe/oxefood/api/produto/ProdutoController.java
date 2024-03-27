@@ -17,6 +17,16 @@ import br.com.ifpe.oxefood.modelo.produto.ProdutoService;
 @CrossOrigin
 public class ProdutoController {
 
+    @GetMapping
+    public List<Produto> listarTodos() {
+        return produtoService.listarTodos();
+    }
+
+    @GetMapping("/{id}")
+    public Produto obterPorID(@PathVariable Long id) {
+        return produtoService.obterPorID(id);
+    }
+
    @Autowired
    private ProdutoService produtoService;
 

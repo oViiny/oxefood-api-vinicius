@@ -10,6 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteService {
 
+    public List<Cliente> listarTodos() {
+  
+        return repository.findAll();
+    }
+
+    public Cliente obterPorID(Long id) {
+
+        return repository.findById(id).get();
+    }
+
    @Autowired
    private ClienteRepository repository;
 

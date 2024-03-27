@@ -10,6 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class EntregadorService {
 
+   public List<Entregador> listarTodos() {
+  
+      return repository.findAll();
+  }
+
+  public Entregador obterPorID(Long id) {
+
+      return repository.findById(id).get();
+  }
+
    @Autowired
    private EntregadorRepository repository;
 

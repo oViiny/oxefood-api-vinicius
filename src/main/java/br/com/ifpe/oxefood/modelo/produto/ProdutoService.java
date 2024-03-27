@@ -10,6 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProdutoService {
 
+    public List<Produto> listarTodos() {
+  
+        return repository.findAll();
+    }
+
+    public Produto obterPorID(Long id) {
+
+        return repository.findById(id).get();
+    }
+
    @Autowired
    private ProdutoRepository repository;
 

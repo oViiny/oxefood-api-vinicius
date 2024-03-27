@@ -17,6 +17,17 @@ import br.com.ifpe.oxefood.modelo.entregador.EntregadorService;
 @CrossOrigin
 public class EntregadorController {
 
+    @GetMapping
+    public List<Entregador> listarTodos() {
+        return entregadorService.listarTodos();
+    }
+
+    @GetMapping("/{id}")
+    public Entregador obterPorID(@PathVariable Long id) {
+        return entregadorService.obterPorID(id);
+    }
+
+
    @Autowired
    private EntregadorService entregadorService;
 

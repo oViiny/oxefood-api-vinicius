@@ -2,11 +2,13 @@ package br.com.ifpe.oxefood.modelo.entregador;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ifpe.oxefood.modelo.cliente.Cliente;
+import br.com.ifpe.oxefood.util.exception.EntidadeNaoEncontradaException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -18,8 +20,13 @@ public class EntregadorService {
   }
 
   public Entregador obterPorID(Long id) {
-
-      return repository.findById(id).get();
+        Optional<Entregador> consulta = repository.findById(id);
+  
+        if (consulta.isPresent()) {
+            return consulta.get();
+        } else {
+            throw new EntidadeNaoEncontradaException("Entregador", id);
+        }
   }
 
    @Autowired

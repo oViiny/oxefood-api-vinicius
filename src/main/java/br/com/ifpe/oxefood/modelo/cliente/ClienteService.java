@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import br.com.ifpe.oxefood.modelo.mensagens.EmailService;
+import br.com.ifpe.oxefood.modelo.produto.Produto;
 import br.com.ifpe.oxefood.util.exception.EntidadeNaoEncontradaException;
 
 @Service
@@ -33,15 +35,42 @@ public class ClienteService {
    @Autowired
    private ClienteRepository repository;
 
+
+    @Autowired
+    private EmailService emailService;
+
    @Transactional
    public Cliente save(Cliente cliente) {
 
        cliente.setHabilitado(Boolean.TRUE);
        cliente.setVersao(1L);
        cliente.setDataCriacao(LocalDate.now());
-       return repository.save(cliente);
+
+       Cliente clienteSalvo = repository.save(cliente);
+
+       emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);
+
+       return clienteSalvo;
    }
    
+   public List<Cliente> filtrar(String cpf, String nome) {
+
+    List<Cliente> listaClientes = repository.findAll();
+
+    if ((cpf != null && !"".equals(cpf)) &&
+        (nome == null || "".equals(nome))) {
+            listaClientes = repository.consultarPorCpf(cpf);
+    } else if (
+        (cpf == null || "".equals(cpf)) &&
+        (nome != null && !"".equals(nome))) {    
+            listaClientes = repository.findByNomeContainingIgnoreCaseOrderByNomeAsc(nome);
+    } else if (
+        (cpf != null || "".equals(cpf)) &&
+        (nome != null || "".equals(nome))) {
+            listaClientes = repository.consultarPorNomeECpf(nome, cpf); 
+    } 
+    return listaClientes;
+}
 
 @Transactional
 public void update(Long id, Cliente clienteAlterado) {

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood.modelo.mensagens.EmailService;
 import br.com.ifpe.oxefood.modelo.produto.Produto;
 import br.com.ifpe.oxefood.util.exception.EntidadeNaoEncontradaException;
@@ -39,8 +40,13 @@ public class ClienteService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
    @Transactional
    public Cliente save(Cliente cliente) {
+
+        usuarioService.save(cliente.getUsuario());
 
        cliente.setHabilitado(Boolean.TRUE);
        cliente.setVersao(1L);

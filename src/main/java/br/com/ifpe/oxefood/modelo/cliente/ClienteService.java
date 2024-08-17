@@ -1,19 +1,16 @@
 package br.com.ifpe.oxefood.modelo.cliente;
-import java.util.Optional;
-import jakarta.transaction.Transactional;
-
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
+import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood.modelo.mensagens.EmailService;
-import br.com.ifpe.oxefood.modelo.produto.Produto;
 import br.com.ifpe.oxefood.util.exception.EntidadeNaoEncontradaException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ClienteService {
@@ -42,9 +39,10 @@ public class ClienteService {
 
     @Autowired
     private UsuarioService usuarioService;
+    
 
    @Transactional
-   public Cliente save(Cliente cliente) {
+   public Cliente save(Cliente cliente, Usuario usuarioLogado) {
 
         usuarioService.save(cliente.getUsuario());
 
@@ -54,7 +52,7 @@ public class ClienteService {
 
        Cliente clienteSalvo = repository.save(cliente);
 
-       emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);
+       //emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);
 
        return clienteSalvo;
    }
@@ -79,7 +77,7 @@ public class ClienteService {
 }
 
 @Transactional
-public void update(Long id, Cliente clienteAlterado) {
+public void update(Long id, Cliente clienteAlterado, Usuario usuarioLogado) {
     
     
     Cliente cliente = repository.findById(id).get();
@@ -90,6 +88,7 @@ public void update(Long id, Cliente clienteAlterado) {
     cliente.setFoneFixo(clienteAlterado.getFoneFixo());
       
     cliente.setVersao(cliente.getVersao() + 1);
+    cliente.setDataUltimaModificacao(LocalDate.now());
     repository.save(cliente);
 
 }
